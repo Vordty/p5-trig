@@ -1,25 +1,29 @@
 export class Picker {
-	constructor(radius, position) {
+	constructor(radius, angle) {
 		this.radius = radius;
-		this.position = position;
+		this.angle = angle;
 		this.hover = false;
+		this.size = 15;
 	}
 
 	draw() {
-		console.log("HEY", this.position);
+		this.position = {
+			x: this.radius * cos(this.angle),
+			y: this.radius * sin(this.angle),
+		};
+
 		const distance = dist(this.position.x, this.position.y, mouseX - width / 2, mouseY - height / 2);
 
-		if (distance <= this.radius) {
+		noStroke();
+		strokeWeight(5);
+		fill("#f25641");
+
+		if (distance <= this.size) {
 			this.hover = true;
-			stroke("white");
-			strokeWeight(5);
-			fill("blue");
-		} else {
-			stroke("white");
-			strokeWeight(5);
-			fill("red");
+			cursor("pointer");
+			fill("#fa7c52");
 		}
 
-		ellipse(this.position.x, this.position.y, this.radius * 2);
+		ellipse(this.position.x, this.position.y, this.size * 2);
 	}
 }
